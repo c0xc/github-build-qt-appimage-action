@@ -158,6 +158,12 @@ if (which $linuxdeploy && ls AppDir) >/dev/null 2>&1; then
             args+=("--icon-file" $icon_file)
         fi
     fi
+    if [ -n "$add_library" ]; then
+        # libQt5XcbQpa.so
+        for i in $add_library; do
+            args+=("--library" "$i")
+        done
+    fi
     # Arguments, continued
     args+=("--appdir" "AppDir")
     args+=("--output" "appimage")
