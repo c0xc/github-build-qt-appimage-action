@@ -115,7 +115,10 @@ fi
 # Add Qt plugins to be included in bundle - if using manual Qt build
 # Without these plugins, the application may fail to start!
 if [[ -n "$QTDIR" ]]; then
+    echo "adding Qt platform plugins to the bundle"
+    mkdir -p ./AppDir/usr/bin/
     cp -var "$QTDIR/plugins/platforms/" AppDir/usr/bin/
+    echo
 fi
 
 # Run linuxdeploy tool to create AppImage
