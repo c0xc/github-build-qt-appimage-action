@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=System
+Comment=...
+Exec=MyProgram
+Icon=MyProgram
+Name=My Program
+Terminal=false
+Type=Application
+
