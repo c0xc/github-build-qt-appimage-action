@@ -2,7 +2,7 @@ Setup
 -----
 
 Take the workflow file and the build settings file from this example directory
-and make the modifications as explained below.
+and modify them as explained below.
 Then add these files to your Qt project repository:
 
 The workflow file goes into the subdirectory `.github/workflows/`,
@@ -20,7 +20,7 @@ The **build settings file** specifies the desktop file and the icon to be used:
     desktop_file=my_program.desktop
     icon_file=res/my_program.png
 
-Both are required to build an AppImage file. Change these variables so that they point to the desktop and icon files in your project repository.
+Both are required to build an AppImage file. Change these variables so that they point to the respective files in your project repository.
 The icon file must have a valid resolution (like 256x256).
 
 If you specify a font file, it will be included in the AppImage file:
