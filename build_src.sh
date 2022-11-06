@@ -158,15 +158,25 @@ if (which $linuxdeploy && ls AppDir) >/dev/null 2>&1; then
             args+=("--icon-file" $icon_file)
         fi
     fi
+    if [ "$add_library" = "xcb" ]; then
+        add_library=libQt5XcbQpa.so
+    fi
     if [ -n "$add_library" ]; then
-        # libQt5XcbQpa.so
+        # libQt5XcbQpa.so => $QTDIR/lib/libQt5XcbQpa.so
         for i in $add_library; do
-            args+=("--library" "$i")
+            lib=$i
+            if ! [ -f "$lib" ]; then
+                if [ -f "$QTDIR/lib/$lib" ]; then
+                    lib="$QTDIR/lib/$lib"
+                fi
+            fi
+            args+=("--library" "$lib")
         done
     fi
     # Arguments, continued
     args+=("--appdir" "AppDir")
     args+=("--output" "appimage")
+    args+=("--plugin" "qt")
     echo "linuxdeploy arguments: ${args[@]}"
     $linuxdeploy "${args[@]}"
 
