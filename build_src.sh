@@ -35,7 +35,9 @@ if [ -f "/etc/profile.d/qt.sh" ]; then
     cat /etc/profile.d/qt.sh
     source /etc/profile.d/qt.sh
 elif [ -d "/usr/lib64/qt5/bin" ]; then
+    echo "PATH += /usr/lib64/qt5/bin"
     export PATH=$PATH:/usr/lib64/qt5/bin
+    which qmake-qt5
 fi
 if [ -n "$QTDIR" ]; then
     echo "QTDIR: $QTDIR"
