@@ -24,6 +24,9 @@ if [ -z "$NO_QT_BUILD" ]; then
     /var/tmp/build_qt5.sh
 fi
 
+echo Fedora Qt5
+ls -la /usr/lib64/qt5/bin || true
+which qmake-qt5 || true
 # Load Qt (custom Qt build if available, standard Qt installation otherwise)
 echo "BUILD PIPELINE - APPLICATION BUILD SCRIPT..."
 ls -l /src /build || true
