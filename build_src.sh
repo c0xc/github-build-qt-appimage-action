@@ -171,6 +171,8 @@ if (which $linuxdeploy && ls AppDir) >/dev/null 2>&1; then
             if ! [ -f "$lib" ]; then
                 if [ -f "$QTDIR/lib/$lib" ]; then
                     lib="$QTDIR/lib/$lib"
+                elif [ -f "/usr/lib64/$lib" ]; then
+                    lib="/usr/lib64/$lib"
                 fi
             fi
             args+=("--library" "$lib")
