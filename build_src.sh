@@ -31,6 +31,8 @@ if [ -f "/etc/profile.d/qt.sh" ]; then
     echo "found Qt env script, sourcing it..."
     cat /etc/profile.d/qt.sh
     source /etc/profile.d/qt.sh
+elif [ -d "/usr/lib64/qt5/bin" ]; then
+    export PATH=$PATH:/usr/lib64/qt5/bin
 fi
 if [ -n "$QTDIR" ]; then
     echo "QTDIR: $QTDIR"
