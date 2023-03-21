@@ -44,6 +44,10 @@ if ! which qmake >/dev/null 2>&1; then
     echo "qmake missing!" >&2
 fi
 ls -l /usr/bin/qmake || true
+echo -n test which
+which qmake || true
+echo -n test type
+type qmake || true
 qmake -h
 echo -n "= "
 which qmake || exit $?
