@@ -26,7 +26,7 @@ fi
 
 # Load Qt (custom Qt build if available, standard Qt installation otherwise)
 echo "BUILD PIPELINE - APPLICATION BUILD SCRIPT..."
-ls -l /src /build
+ls -l /src /build || true
 if [ -f "/etc/profile.d/qt.sh" ]; then
     echo "found Qt env script, sourcing it..."
     cat /etc/profile.d/qt.sh
