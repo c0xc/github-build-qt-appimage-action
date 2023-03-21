@@ -36,7 +36,7 @@ if [ -f "/etc/profile.d/qt.sh" ]; then
     source /etc/profile.d/qt.sh
 elif [ -d "/usr/lib64/qt5/bin" ]; then
     echo "PATH += /usr/lib64/qt5/bin"
-    export PATH=$PATH:/usr/lib64/qt5/bin
+    PATH=$PATH:/usr/lib64/qt5/bin
     which qmake-qt5
 fi
 if [ -n "$QTDIR" ]; then
@@ -44,6 +44,9 @@ if [ -n "$QTDIR" ]; then
 else
     echo "QTDIR not defined, using Qt installation from distribution" >&2
 fi
+echo "PATH: $PATH"
+ls -l /usr/lib64/qt5/bin/qmake
+/usr/lib64/qt5/bin/qmake -h
 if ! which qmake >/dev/null 2>&1; then
     echo "qmake missing!" >&2
 fi
