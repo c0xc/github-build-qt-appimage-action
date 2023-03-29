@@ -10,6 +10,10 @@ RUN \
 
 RUN \
     sed -i 's/main$/main contrib non-free/g' /etc/apt/sources.list && \
+    sed -i '/^deb.*jessie.updates/d' /etc/apt/sources.list && \
+    sed -i 's!^# \(deb http://snapshot\)!\1!' /etc/apt/sources.list
+
+RUN \
     apt-get update && \
     apt-get install -y \
     flex bison gperf libicu-dev libxslt-dev ruby \
