@@ -14,6 +14,8 @@ cd "$GITHUB_WORKSPACE" || exit $?
 # Pipeline build parameters
 if [ -n "$INPUT_RECIPE" ]; then
     source "$INPUT_RECIPE"
+elif [ -f ".build_pipe_vars" ]; then
+    source .build_pipe_vars
 fi
 
 # Run Qt build, if configured
@@ -178,7 +180,7 @@ if (which $linuxdeploy && ls AppDir) >/dev/null 2>&1; then
     args+=("--output" "appimage")
     args+=("--plugin" "qt")
     echo "linuxdeploy arguments: ${args[@]}"
-    $linuxdeploy "${args[@]}"
+    $linuxdeploy "${args[@]}" || exit $?
 
     echo "AppDir/:"
     ls -lArthR AppDir
