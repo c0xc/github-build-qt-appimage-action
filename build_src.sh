@@ -11,9 +11,17 @@ if [[ -z "$GITHUB_WORKSPACE" ]]; then
 fi
 cd "$GITHUB_WORKSPACE" || exit $?
 
+if ! type which >/dev/null 2>&1; then
+    echo "core dependency missing: which" >&2
+    exit 1
+fi
+
 # Pipeline build parameters
+# INPUT_RECIPE=.build_pipe_vars
 if [ -n "$INPUT_RECIPE" ]; then
     source "$INPUT_RECIPE"
+elif [ -f ".build_pipe_vars" ]; then
+    source .build_pipe_vars
 fi
 
 # Run Qt build, if configured
@@ -77,10 +85,11 @@ echo
 
 # Install other system dependencies
 if [ -n "$INSTALL_DEBIAN" ]; then
-    # /etc/debian_version
-    echo "installing Debian packages: $INSTALL_DEBIAN"
-    apt-get install -y $INSTALL_DEBIAN || exit $?
-    echo
+    if which apt-get >/dev/null 2>&1; then
+        echo "installing Debian packages: $INSTALL_DEBIAN"
+        apt-get install -y $INSTALL_DEBIAN || exit $?
+        echo
+    fi
 fi
 
 # Build application and copy it to AppDir/
@@ -141,6 +150,8 @@ if (which $linuxdeploy && ls AppDir) >/dev/null 2>&1; then
 
     # Arguments
     args=()
+    # A wildcard is used to find the previously built binary
+    # The initial workdir must be clean
     if [ -z "$bin_file" ]; then
         bin_file="bin/*"
     fi
@@ -183,7 +194,7 @@ if (which $linuxdeploy && ls AppDir) >/dev/null 2>&1; then
     args+=("--output" "appimage")
     args+=("--plugin" "qt")
     echo "linuxdeploy arguments: ${args[@]}"
-    $linuxdeploy "${args[@]}"
+    $linuxdeploy "${args[@]}" || exit $?
 
     echo "AppDir/:"
     ls -lArthR AppDir
