@@ -91,6 +91,29 @@ if [ -n "$INSTALL_DEBIAN" ]; then
         echo
     fi
 fi
+if (which yum && -n "$INSTALL_FEDORA") >/dev/null 2>&1; then
+    echo "Installing other dependencies: $INSTALL_FEDORA"
+    for p in $INSTALL_FEDORA; do
+
+        if [[ $p != */* ]]; then
+            echo "Installing: $p"
+            yum install -y "$p" || exit $?
+        else
+            # variant1/variant2
+            echo "Installing any of $p..."
+            for i in $(echo $p | tr "/" "\n"); do
+                echo "Trying to install: $i"
+                if yum info "$i" >/dev/null 2>&1; then
+                    yum install -y "$i" || exit $?
+                    break
+                else
+                    echo "Optional package not found: $i"
+                fi
+            done
+        fi
+
+    done
+fi
 
 # Build application and copy it to AppDir/
 pro_file=$(find . -mindepth 1 -maxdepth 1 -name "*.pro")
