@@ -166,7 +166,24 @@ fi
 if (which yum && -n "$YUM_INSTALL") >/dev/null 2>&1; then
     echo "Installing other dependencies: $YUM_INSTALL"
     for p in $YUM_INSTALL; do
-        yum install -y "$p" || exit $?
+
+        if [[ $p != */* ]]; then
+            echo "Installing: $p"
+            yum install -y "$p" || exit $?
+        else
+            # variant1/variant2
+            echo "Installing any of $p..."
+            for i in $(echo $p | tr "/" "\n"); do
+                echo "Trying to install: $i"
+                if yum info "$i" >/dev/null 2>&1; then
+                    yum install -y "$i" || exit $?
+                    break
+                else
+                    echo "Optional package not found: $i"
+                fi
+            done
+        fi
+
     done
 fi
 
