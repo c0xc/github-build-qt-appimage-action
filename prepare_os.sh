@@ -157,33 +157,33 @@ fi
 OS_ID=$(cat /etc/os-release | grep ^ID | cut -f2 -d'=')
 echo "$OS_ID"
 
-if (which apt-get && -n "$APT_INSTALL") >/dev/null 2>&1; then
-    echo "Installing other dependencies: $APT_INSTALL"
-    for p in $APT_INSTALL; do
-        apt-get install -y "$p" || exit $?
-    done
-fi
-if (which yum && -n "$YUM_INSTALL") >/dev/null 2>&1; then
-    echo "Installing other dependencies: $YUM_INSTALL"
-    for p in $YUM_INSTALL; do
-
-        if [[ $p != */* ]]; then
-            echo "Installing: $p"
-            yum install -y "$p" || exit $?
-        else
-            # variant1/variant2
-            echo "Installing any of $p..."
-            for i in $(echo $p | tr "/" "\n"); do
-                echo "Trying to install: $i"
-                if yum info "$i" >/dev/null 2>&1; then
-                    yum install -y "$i" || exit $?
-                    break
-                else
-                    echo "Optional package not found: $i"
-                fi
-            done
-        fi
-
-    done
-fi
+#if (which apt-get && -n "$APT_INSTALL") >/dev/null 2>&1; then
+#    echo "Installing other dependencies: $APT_INSTALL"
+#    for p in $APT_INSTALL; do
+#        apt-get install -y "$p" || exit $?
+#    done
+#fi
+#if [ -n "$YUM_INSTALL" ] && (which yum >/dev/null 2>&1); then
+#    echo "Installing other dependencies: $YUM_INSTALL"
+#    for p in $YUM_INSTALL; do
+#
+#        if [[ $p != */* ]]; then
+#            echo "Installing: $p"
+#            yum install -y "$p" || exit $?
+#        else
+#            # variant1/variant2
+#            echo "Installing any of $p..."
+#            for i in $(echo $p | tr "/" "\n"); do
+#                echo "Trying to install: $i"
+#                if yum info "$i" >/dev/null 2>&1; then
+#                    yum install -y "$i" || exit $?
+#                    break
+#                else
+#                    echo "Optional package not found: $i"
+#                fi
+#            done
+#        fi
+#
+#    done
+#fi
 
