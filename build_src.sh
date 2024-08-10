@@ -91,7 +91,7 @@ if [ -n "$INSTALL_DEBIAN" ]; then
         echo
     fi
 fi
-if (which yum && -n "$INSTALL_FEDORA") >/dev/null 2>&1; then
+if [ -n "$INSTALL_FEDORA" ] && (which yum >/dev/null 2>&1); then
     echo "Installing other dependencies: $INSTALL_FEDORA"
     for p in $INSTALL_FEDORA; do
 
