@@ -118,6 +118,12 @@ fi
 # Build application and copy it to AppDir/
 pro_file=$(find . -mindepth 1 -maxdepth 1 -name "*.pro")
 if [ -n "$pro_file" ]; then
+    # Remove optional dependencies
+    for p in $DISABLE_PKGCONFIG; do
+        echo "Removing PKGCONFIG dependency from pro file: $p"
+        sed -i "/PKGCONFIG += $p$/d" "$pro_file"
+    done
+
     # qmake
     echo "BUILD - QMAKE: $pro_file"
 

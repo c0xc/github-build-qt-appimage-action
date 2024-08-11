@@ -157,6 +157,7 @@ fi
 OS_ID=$(cat /etc/os-release | grep ^ID | cut -f2 -d'=')
 echo "$OS_ID"
 
+# See INSTALL_DEBIAN, INSTALL_FEDORA in build_src.sh
 #if (which apt-get && -n "$APT_INSTALL") >/dev/null 2>&1; then
 #    echo "Installing other dependencies: $APT_INSTALL"
 #    for p in $APT_INSTALL; do
